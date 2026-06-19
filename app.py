@@ -49,6 +49,14 @@ except FileNotFoundError:
         "Pehle train_model.py run karke ye files generate karein, "
         "phir unhe app.py ke saath same folder/repo me rakhein."
     )
+except Exception as e:
+    model, vectorizer = None, None
+    load_error = (
+        "Model load karte waqt error aaya (likely library version mismatch "
+        "between training environment and this server).\n\n"
+        f"**Error type:** `{type(e).__name__}`\n\n"
+        f"**Error details:** `{e}`"
+    )
 
 
 # ---------- Same clean_text() as the notebook ----------
