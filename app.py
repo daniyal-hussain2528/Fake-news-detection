@@ -45,15 +45,15 @@ try:
 except FileNotFoundError:
     model, vectorizer = None, None
     load_error = (
-        "model.pkl ya vectorizer.pkl nahi mili. "
-        "Pehle train_model.py run karke ye files generate karein, "
-        "phir unhe app.py ke saath same folder/repo me rakhein."
+        "model.pkl or vectorizer.pkl was not found. "
+        "Run train_model.py first to generate these files, "
+        "then place them in the same folder/repo as app.py."
     )
 except Exception as e:
     model, vectorizer = None, None
     load_error = (
-        "Model load karte waqt error aaya (likely library version mismatch "
-        "between training environment and this server).\n\n"
+        "An error occurred while loading the model (likely a library version "
+        "mismatch between the training environment and this server).\n\n"
         f"**Error type:** `{type(e).__name__}`\n\n"
         f"**Error details:** `{e}`"
     )
@@ -77,8 +77,8 @@ def predict_news(news_text):
 # ---------- UI ----------
 st.title("📰 Fake News Detection System")
 st.write(
-    "Neeche kisi bhi news article ka text paste karein, "
-    "aur model batayega ke ye **Real** hai ya **Fake**."
+    "Paste any news article text below, "
+    "and the model will tell you whether it's **Real** or **Fake**."
 )
 
 if load_error:
@@ -86,7 +86,7 @@ if load_error:
     st.stop()
 
 news_input = st.text_area(
-    "News text yahan paste karein:",
+    "Paste the news text here:",
     height=220,
     placeholder="Paste the full news article text here...",
 )
@@ -99,7 +99,7 @@ with col2:
 
 if check_clicked:
     if not news_input.strip():
-        st.warning("Pehle kuch news text likhein ya paste karein.")
+        st.warning("Please enter or paste some news text first.")
     else:
         with st.spinner("Analyzing..."):
             result = predict_news(news_input)
@@ -111,6 +111,6 @@ if check_clicked:
 
 st.divider()
 st.caption(
-    "⚠️ Disclaimer: Ye model ek dataset par train hua hai aur 100% accurate nahi hai. "
-    "Important decisions ke liye sirf is tool par bharosa na karein."
+    "⚠️ Disclaimer: This model is trained on a specific dataset and is not "
+    "100% accurate. Do not rely solely on this tool for important decisions."
 )
